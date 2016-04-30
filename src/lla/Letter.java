@@ -16,6 +16,12 @@ public class Letter {
 		mPosInAlphabet = pos;
 	}
 	
+	public char getLetterCharacter() {
+		return mLetter;	
+	}
+	
+	
 	private char mLetter;
 	private int mPosInAlphabet;
+	
 }

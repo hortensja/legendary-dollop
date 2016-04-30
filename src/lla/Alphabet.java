@@ -29,6 +29,29 @@ public class Alphabet {
 		System.out.println("Alphabet : " + mAlphabetList);
 	}
 	
+	public int getAlphabetSize() {
+		return mAlphabetSize;
+	}
+	
+	public Letter getLetter(char c) {
+		
+		for (Letter l : mAlphabetList) {
+			if (l.getLetterCharacter() == c) {
+				return l;
+				}
+		}
+		return null;
+	}
+	
+	public Letter getLetter(int pos) {
+		return mAlphabetList.get(pos);
+	}
+	
+	public List<Letter> getLetterList() {
+		return mAlphabetList;
+	}
+	
+	
 	
 	private int mAlphabetSize;
 	private List<Letter> mAlphabetList = new ArrayList<Letter>();
