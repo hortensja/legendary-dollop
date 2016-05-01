@@ -6,8 +6,16 @@ public class Computation {
 
 		Alphabet alphabet = new Alphabet();
 		Sequence seq = new Sequence(alphabet);
+		Model model0 = new Model(alphabet, seq.getSeqLength());
 		
-		System.out.println(MathUtil.gamma(6));
+		model0.printModel();
+		
+		for (int mu = 0; mu < seq.getSeqLength(); mu++) {
+			seq.calculateProbWithGivenMu(mu, model0, alphabet);
+		}
+		
+		
+		//System.out.println(MathUtil.gamma(6));
 		
 	}
 

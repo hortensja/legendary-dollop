@@ -28,7 +28,42 @@ public class Sequence {
 		System.out.println("Sequence : " + mSequenceList);
 	}
 	
-	public double calculateProductOfGammas(int i, int j, Model m, Alphabet alphabet) {
+	public int getSeqLength() {
+		return mSequenceList.size();
+	}
+	
+	public double calculateProbWithGivenMu(int mu, Model m, Alphabet alphabet) {
+		
+		double ret = 0.0;
+
+		System.out.println(mu + " : " + m.getSeqSize());
+		System.out.println(MathUtil.NewtonSymbol(m.getSeqSize()-1, mu));
+		
+		MathUtil.Combination combination = new MathUtil.Combination(mu, m.getSeqSize()-1);
+		
+		
+		
+		for (int a = 0; a < MathUtil.NewtonSymbol(m.getSeqSize()-1, mu); a++) {
+			//suma po ||A|| = m
+			
+			
+			List<Integer> changePointVector = combination.getCombination();
+			changePointVector.add(m.getSeqSize());
+			System.out.println("Current combination : " + changePointVector);
+			
+			combination.nextCombination();
+			
+			double temp = m.getProbabilityOfAGivenMu(mu);
+			
+			for (int j = 0; j < mu; j++) {
+				//temp *= calculateProductOfGammas(a0, a1, m, alphabet);
+			}
+			ret += temp;
+		}
+		return ret;
+	}
+	
+	private double calculateProductOfGammas(int i, int j, Model m, Alphabet alphabet) {
 		double ret = 1;
 		
 		ret = MathUtil.gamma(countTotalAlphaSum(m, alphabet));
@@ -44,7 +79,6 @@ public class Sequence {
 		return ret;
 	}
 	
-	
 	private int countTotalAlphaSum(Model m, Alphabet alphabet) {
 		int ret = 0;
 		
@@ -53,8 +87,7 @@ public class Sequence {
 		}
 		return ret;
 	}
-	
-	
+		
 	private int countLettersInSubstring(int i, int j, Letter l) {
 		int ret = 0;
 		for (int k = i; k <= j; k++) {

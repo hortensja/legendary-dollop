@@ -23,6 +23,8 @@ public class Alphabet {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}				
+		
+		mAlphabetSize = mAlphabetList.size();
 	}
 	
 	public void printAlphabet() {
