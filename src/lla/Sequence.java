@@ -36,18 +36,18 @@ public class Sequence {
 		
 		double ret = 0.0;
 
-		System.out.println(mu + " : " + m.getSeqSize());
+		System.out.print(mu + " : " + m.getSeqSize() + " ");
 		System.out.println(MathUtil.NewtonSymbol(m.getSeqSize()-1, mu));
 		
 		MathUtil.Combination combination = new MathUtil.Combination(mu, m.getSeqSize()-1);
-		
-		
-		
+				
 		for (int a = 0; a < MathUtil.NewtonSymbol(m.getSeqSize()-1, mu); a++) {
 			//suma po ||A|| = m
 			
 			
-			List<Integer> changePointVector = combination.getCombination();
+			List<Integer> changePointVector = new LinkedList<Integer>();
+			changePointVector.add(0);
+			changePointVector.addAll(combination.getCombination());
 			changePointVector.add(m.getSeqSize());
 			System.out.println("Current combination : " + changePointVector);
 			
@@ -55,11 +55,13 @@ public class Sequence {
 			
 			double temp = m.getProbabilityOfAGivenMu(mu);
 			
-			for (int j = 0; j < mu; j++) {
-				//temp *= calculateProductOfGammas(a0, a1, m, alphabet);
+			for (int j = 0; j < mu+1; j++) {
+				temp *= calculateProductOfGammas(changePointVector.get(j), changePointVector.get(j+1)-1, m, alphabet);
+				System.out.println(temp);
 			}
 			ret += temp;
 		}
+		System.out.println("Probability with mu = "+mu+" = "+ret);
 		return ret;
 	}
 	
@@ -76,6 +78,8 @@ public class Sequence {
 		double temp = MathUtil.gamma(j - i + 1 + countTotalAlphaSum(m, alphabet));
 		
 		ret /= temp;
+		
+		System.out.println("product for "+i+"->"+j+" : "+ret);
 		return ret;
 	}
 	

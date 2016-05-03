@@ -10,6 +10,8 @@ public class Computation {
 		
 		model0.printModel();
 		
+		//int mu = 1;
+		
 		for (int mu = 0; mu < seq.getSeqLength(); mu++) {
 			seq.calculateProbWithGivenMu(mu, model0, alphabet);
 		}
