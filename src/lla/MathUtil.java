@@ -24,6 +24,9 @@ public class MathUtil {
 	public static double NewtonSymbol(double n, double k) {
 		
 		double ret;
+		if (n < k) {
+			return 0;
+		}
 		
 		ret = gamma(n+1);
 		ret /= gamma(k+1);
@@ -36,6 +39,9 @@ public class MathUtil {
 	public static class Combination {
 
 		public Combination(int toDraw, int total) {
+			if (toDraw > total) {
+				return;
+			}
 			combinationLength = total;
 			this.toDraw = toDraw;
 			
@@ -45,7 +51,7 @@ public class MathUtil {
 			for (int i = 0; i < toDraw; i++) {
 				combination.add(true);
 			}
-			System.out.println(combination);
+			//System.out.println(combination);
 		}
 		
 		public List<Integer> getCombination() {
@@ -64,19 +70,26 @@ public class MathUtil {
 		public void nextCombination() {
 					
 			int p = combinationLength - 1;
+			
+			if (p <= 0) {
+				return;
+			}
 
+			//System.out.println("p1 = " + p);
 			while (!(combination.get(p) == true && combination.get(p-1) == false)) {
 				p--;
-				if (p==0) {
+				if (p <= 0) {
 					return;
 				}
 			}
+			
 			int s = 0;
 			for (int i = p+1; i < combinationLength; i++) {
 				if (combination.get(i)) {
 					s++;
 				}
 			}
+			//System.out.println("p2 = " + p);
 			
 			combination.set(p-1, true);
 			for (int i = p; i < combinationLength-s; i++) {

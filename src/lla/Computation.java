@@ -12,13 +12,7 @@ public class Computation {
 		
 		//int mu = 1;
 		
-		for (int mu = 0; mu < seq.getSeqLength(); mu++) {
-			seq.calculateProbWithGivenMu(mu, model0, alphabet);
-		}
-		
-		
-		//System.out.println(MathUtil.gamma(6));
-		
+		seq.printResults(model0, alphabet);
 	}
 
 }

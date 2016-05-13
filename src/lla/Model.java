@@ -42,10 +42,10 @@ public class Model {
 	
 	
 	public void printModel() {
-		System.out.println("Model nr " + mModelIndex);
+		System.out.println("\nModel nr " + mModelIndex);
 		System.out.println("Alpha : " + mAlphaVector);
 		System.out.println("Probability of mu : " + mProbabilityOfMu);
-		System.out.println("Probability of A given mu : " + mProbabilityOfAGivenMu);
+		System.out.println("Probability of A given mu : " + mProbabilityOfAGivenMu + '\n');
 	}
 	
 	
