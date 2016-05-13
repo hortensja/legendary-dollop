@@ -40,6 +40,9 @@ public class Model {
 		return mProbabilityOfAGivenMu.get(mu);
 	}
 	
+	public void addPosteriorPDF(MathUtil.mixtureOfDistributions mixd) {
+		mPosteriorPDFs.add(mixd);
+	}
 	
 	public void printModel() {
 		System.out.println("\nModel nr " + mModelIndex);
@@ -48,6 +51,16 @@ public class Model {
 		System.out.println("Probability of A given mu : " + mProbabilityOfAGivenMu + '\n');
 	}
 	
+	public void printExpectedValues(Alphabet a) {
+		int i =0 ;
+		for (MathUtil.mixtureOfDistributions mixd : mPosteriorPDFs) {
+			System.out.println("Expected values at position " + i++);
+			for (Letter l : a.getLetterList()) {
+				System.out.println(l + " -> " + mixd.getExpectedValue(l));
+			}
+		}
+		
+	}
 	
 	
 	private int mModelIndex;
@@ -56,4 +69,5 @@ public class Model {
 	private List<Double> mProbabilityOfAGivenMu = new ArrayList<Double>();
 	private List<Double> mProbabilityOfMu = new ArrayList<Double>();
 	
+	private List<MathUtil.mixtureOfDistributions> mPosteriorPDFs = new ArrayList<MathUtil.mixtureOfDistributions>();
 }

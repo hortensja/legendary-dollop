@@ -1,7 +1,9 @@
 package lla;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MathUtil {
 
@@ -54,18 +56,28 @@ public class MathUtil {
 			//System.out.println(combination);
 		}
 		
-		public List<Integer> getCombination() {
+		public List<Integer> getCombination(int seqLength) {
 			
 			List<Integer> ret = new LinkedList<Integer>();
-			
+			ret.add(0);
 			for (int i = 0; i < combinationLength; i++) {
 				if (combination.get(i)) {
 					ret.add(i+1);
 				}
 			}
+			ret.add(seqLength);
 			return ret;
 		}
 		
+		public List<Integer> getCombination() {
+			List<Integer> ret = new LinkedList<Integer>();
+			for (int i = 0; i < combinationLength; i++) {
+				if (combination.get(i)) {
+					ret.add(i);
+				}
+			}
+			return ret;
+		}
 		
 		public void nextCombination() {
 					
@@ -75,7 +87,6 @@ public class MathUtil {
 				return;
 			}
 
-			//System.out.println("p1 = " + p);
 			while (!(combination.get(p) == true && combination.get(p-1) == false)) {
 				p--;
 				if (p <= 0) {
@@ -89,7 +100,6 @@ public class MathUtil {
 					s++;
 				}
 			}
-			//System.out.println("p2 = " + p);
 			
 			combination.set(p-1, true);
 			for (int i = p; i < combinationLength-s; i++) {
@@ -100,11 +110,69 @@ public class MathUtil {
 			}
 		}
 
-
-
 		private List<Boolean> combination = new LinkedList<Boolean>();
 		private int combinationLength;
 		private int toDraw;
 	}
 
+	public static class DirichletDistribution {
+		
+		public DirichletDistribution() {
+			//this.alpha = alpha;
+		}
+		
+		public void addCoordinate(Letter l, Double a) {
+			alpha.put(l, a);
+		}
+		
+		public void updateSum() {
+			sum = 0;
+			for (Double a : alpha.values()) {
+				sum += a;
+			}
+		}
+		
+		public double getExpectedValue(Letter l) {
+			updateSum();
+			return alpha.get(l)/sum;
+		}
+		
+		@Override
+		public String toString(){
+			return "D"+alpha;
+		}
+		
+		private Map<Letter, Double> alpha = new HashMap<Letter, Double>();
+		private int sum = 0;
+	}
+	
+	public static class mixtureOfDistributions {
+		
+		public mixtureOfDistributions() {
+			listOfDirichlets = new LinkedList<DirichletDistribution>();
+			listOfCoeffs = new LinkedList<Double>();
+		}
+		
+		public void addToMixture(double coeff, DirichletDistribution dd) {
+			listOfDirichlets.add(dd);
+			listOfCoeffs.add(coeff);
+		}
+		
+		public double getExpectedValue(Letter l) {
+			double ret = 0.0;
+			for (int i = 0; i < listOfDirichlets.size(); i++) {
+				ret += listOfCoeffs.get(i)*listOfDirichlets.get(i).getExpectedValue(l);
+			}
+			return ret;
+		}
+		
+		@Override
+		public String toString() {
+			return listOfCoeffs + "\n" + listOfDirichlets;
+		}
+		
+		private List<DirichletDistribution> listOfDirichlets;
+		private List<Double> listOfCoeffs;
+	}
+	
 }

@@ -13,6 +13,7 @@ public class Computation {
 		//int mu = 1;
 		
 		seq.printResults(model0, alphabet);
+		model0.printExpectedValues(alphabet);
 	}
 
 }
